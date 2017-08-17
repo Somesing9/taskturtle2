@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 var jobController = require('../controllers/jobController');
 var bidController = require('../controllers/bidController');
+var authController = require('../controllers/authController');
 /* GET users listing. */
 // router.get('/create', jobController.create);
 
 // Return all jobs, create a job
 router.get('/', jobController.job_list);
-router.post('/', jobController.create_a_job_post);
+router.post('/', authController.isLoggedIn, jobController.create_a_job_post);
 
 // Send user to create job page
 // router.get('/create', (req, res) => { res.render('jobs/create'); });

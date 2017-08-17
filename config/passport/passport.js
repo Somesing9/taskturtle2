@@ -46,8 +46,7 @@ module.exports = function(passport, user) {
     }
   ));
 
-  passport.use("local-signin", new LocalStrategy( 
-    {
+  passport.use("local-signin", new LocalStrategy({
       // Default use username/password; we override with Email
       usernameField: "email",
       passwordField: "password",
@@ -88,11 +87,12 @@ module.exports = function(passport, user) {
   ));
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    var sessionUser = { id: user.id, email: user.email };
+    done(null, sessionUser);
   });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id).then(function(user) {
+  passport.deserializeUser(function(user, done) {
+    User.findById(user.id).then(function(user) {
       if (user) {
         done(null, user.get());
       } else {
@@ -100,4 +100,14 @@ module.exports = function(passport, user) {
       }
     });
   });
+
+  // passport.deserializeUser(function(id, done) {
+  //   User.findById(id).then(function(user) {
+  //     if (user) {
+  //       done(null, user.get());
+  //     } else {
+  //       done(users.errors, null);
+  //     }
+  //   });
+  // });
 }

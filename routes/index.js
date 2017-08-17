@@ -10,7 +10,7 @@ router.get('/', indexController.index);
 router.get('/signup', authController.signup);
 router.get('/signin', authController.signin);
 router.post('/signin', passport.authenticate('local-signin', {
-  successRedirect: '/dashboard',
+  successRedirect: '/',
   failureRedirect: 'signin'
 }));
 router.post('/signup', passport.authenticate('local-signup', {
