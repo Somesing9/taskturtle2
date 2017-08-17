@@ -6,10 +6,13 @@ var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+var passport = require('passport');
+var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var jobs = require('./routes/jobs');
 var models = require('./models');
+
 
 
 var app = express();
@@ -17,6 +20,15 @@ var app = express();
 // view engine setup
 app.engine("hbs", exphbs({ defaultLayout: "main", extname: '.hbs' }));
 app.set("view engine", "hbs");
+
+// For Passport
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+})); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 
 // uncomment after placing your favicon in /public
@@ -31,6 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/jobs', jobs);
+
+require('./config/passport/passport')(passport, models.User);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

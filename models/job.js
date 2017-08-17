@@ -4,14 +4,16 @@ module.exports = function(sequelize, DataTypes) {
     description: DataTypes.TEXT
   });
 
-  // Job.associate = function(models) {
-  //   Job.belongsTo(models.User, {
-  //     onDelete: "CASCADE",
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
+  Job.associate = function(models) {
+    Job.hasMany(models.Bid);
+    // Job.belongsTo(models.User, {
+    //   onDelete: "CASCADE",
+    //   foreignKey: {
+    //     allowNull: false
+    //   }
+    // });
+  };
+
 
   return Job;
 };

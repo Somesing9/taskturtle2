@@ -1,1 +1,2 @@
-# taskturtle2
+# taskTurtle
+SET DEBUG=taskturtle: * & npm start
