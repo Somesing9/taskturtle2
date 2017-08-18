@@ -1,22 +1,29 @@
-module.exports = function(sequelize, DataTypes) {
-  var Bid = sequelize.define('Bid', {
-    amount: DataTypes.STRING
-    // jobId: DataTypes.INTEGER
+module.exports = function(sequelize, Sequelize) {
+  var Bid = sequelize.define("Bid", {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+    amount: {
+      type: Sequelize.DECIMAL,
+      notEmpty: true
+    },
+    duration: {
+      type: Sequelize.INTEGER,
+      notEmpty: true
+    },
+    accepted: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    }
   });
 
   Bid.associate = function(models) {
-    // Job.belongsTo(models.User, {
-    //   onDelete: "CASCADE",
-    //   foreignKey: {
-    //     allowNull: false
-    //   }
-    // });
-    Bid.belongsTo(models.Job, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+    Bid.belongsTo(models.Job);
+    Bid.belongsTo(models.User);
+  }
 
   return Bid;
 };
+

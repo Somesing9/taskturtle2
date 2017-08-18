@@ -10,7 +10,7 @@ exports.index = (req, res) => {
             results.forEach(function(result) {
               console.log(JSON.stringify(result, null, 2));
               var x = {};
-              x['username'] = result.username;
+              x['username'] = result.email;
               console.log(x);
               j.push(x);
             })

@@ -5,7 +5,9 @@ exports.create_a_bid = (req, res) => {
   // res.send('NOT IMPLEMENTED: Create a bid for job');
   console.log(req.params.id);
   Bid.create({
-      amount: req.body.amount,
+      amount: req.body.bidAmount,
+      duration: req.body.jobDuration,
+      accepted: req.body.accepted,
       JobId: req.params.id
     })
     .then(function() {

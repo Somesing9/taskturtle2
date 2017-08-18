@@ -1,19 +1,55 @@
-module.exports = function(sequelize, DataTypes) {
-  var Job = sequelize.define('Job', {
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT
-  });
+'use strict';
+
+module.exports = function(sequelize, Sequelize) {
+  var Job = sequelize.define("Job", {
+    title: {
+      type: Sequelize.STRING,
+      notEmpty: true
+    },
+    description: {
+      type: Sequelize.STRING
+    },
+    duration: {
+      type: Sequelize.INTEGER,
+      validate: {
+        isInt: true,
+        allowNull: false
+      }
+    },
+    construction: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    indoor: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    landscaping: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    outdoor: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    renovation: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
+    },
+    location: {
+      type: Sequelize.INTEGER,
+      len: [5]
+    },
+    status: {
+      type: Sequelize.ENUM("active", "inactive"),
+      defaultValue: "active"
+    }
+  }); 
 
   Job.associate = function(models) {
+    Job.belongsTo(models.User);
     Job.hasMany(models.Bid);
-    // Job.belongsTo(models.User, {
-    //   onDelete: "CASCADE",
-    //   foreignKey: {
-    //     allowNull: false
-    //   }
-    // });
-  };
-
+  }
 
   return Job;
 };
